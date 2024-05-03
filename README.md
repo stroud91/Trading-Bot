@@ -1,1 +1,3 @@
 # Trading-Bot
+
+First Commit
