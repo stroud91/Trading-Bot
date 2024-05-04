@@ -1,0 +1,54 @@
+Table users {
+  user_id int [pk]
+  username varchar
+  email varchar
+  hashed_password varchar
+  created_at datetime
+  last_login datetime
+}
+
+Table accounts {
+  account_id int [pk]
+  user_id int [ref: > users.user_id]
+  balance decimal
+  account_type varchar
+  created_at datetime
+}
+
+Table transactions {
+  transaction_id int [pk]
+  account_id int [ref: > accounts.account_id]
+  type varchar
+  amount decimal
+  asset_type varchar
+  transaction_date datetime
+}
+
+Table positions {
+  position_id int [pk]
+  account_id int [ref: > accounts.account_id]
+  asset_type varchar
+  quantity decimal
+  average_buy_price decimal
+  current_price decimal
+  open_date datetime
+  last_updated datetime
+}
+
+Table orders {
+  order_id int [pk]
+  account_id int [ref: > accounts.account_id]
+  type varchar
+  status varchar
+  asset_type varchar
+  quantity decimal
+  price decimal
+  order_date datetime
+}
+
+Table market_data {
+  data_id int [pk]
+  asset_type varchar
+  price decimal
+  date_time datetime
+}
