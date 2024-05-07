@@ -1,5 +1,3 @@
-# api_Test.py
-
 from flask import Blueprint, jsonify, request
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.fundamentaldata import FundamentalData

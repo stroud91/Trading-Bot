@@ -1,4 +1,6 @@
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
+
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 class MarketData(db.Model):
@@ -13,6 +15,8 @@ class MarketData(db.Model):
     volume = db.Column(db.Float, nullable=False)
     date_time = db.Column(db.DateTime, nullable=False)
 
+
+    news = relationship('News', back_populates='market_data', lazy='dynamic')
 
 
     def to_dict(self):

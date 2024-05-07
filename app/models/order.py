@@ -1,5 +1,4 @@
 from .db import db
-from .account import Account
 from .db import add_prefix_for_prod
 from sqlalchemy.orm import relationship
 from datetime import datetime

@@ -73,6 +73,16 @@ def upgrade():
                     sa.PrimaryKeyConstraint('data_id')
                     )
 
+    op.create_table('news',
+        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('title', sa.String(length=255), nullable=False),
+        sa.Column('publication_date', sa.DateTime(), nullable=False),
+        sa.Column('description', sa.Text(), nullable=True),
+        sa.Column('url', sa.String(length=255), nullable=False),
+        sa.Column('market_data_id', sa.Integer(), sa.ForeignKey('market_data.id'), nullable=False),
+        sa.PrimaryKeyConstraint('id')
+    )
+
     if environment == "production":
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###qqqqqqqqq

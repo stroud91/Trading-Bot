@@ -1,6 +1,4 @@
-from .db import db
-from .account import Account
-from .db import add_prefix_for_prod
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -12,7 +10,6 @@ class Transaction(db.Model):
     amount = db.Column(db.Float, nullable=False)
     transaction_date = db.Column(db.DateTime, default=datetime.utcnow)
 
-     # Relationships
     account = relationship('Account', back_populates='transactions')
 
 

@@ -7,6 +7,13 @@ from flask_login import LoginManager
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
+from .api.account_routes import account_bp
+from .api.transaction_routes import transaction_bp
+from .api.order_routes import order_bp
+from .api.market_data_routes import market_data_bp
+from .api.news_routes import news_bp
+
+
 from .api.api_Test import stock_api
 from .seeds import seed_commands
 from .config import Config
@@ -30,6 +37,11 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(stock_api, url_prefix='/api/market')
+app.register_blueprint(account_bp, url_prefix='/api/account')
+app.register_blueprint(transaction_bp, url_prefix='/api/transactions')
+app.register_blueprint(order_bp, url_prefix='/api/orders')
+app.register_blueprint(market_data_bp, url_prefix='/api/main')
+app.register_blueprint(news_bp, url_prefix='/api/news')
 db.init_app(app)
 Migrate(app, db)
 
