@@ -5,7 +5,7 @@ from datetime import datetime
 
 class MarketData(db.Model):
     __tablename__ = 'market_data'
-    data_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     asset_type = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)
     high = db.Column(db.Float, nullable=False)
@@ -14,6 +14,8 @@ class MarketData(db.Model):
     close = db.Column(db.Float, nullable=False)
     volume = db.Column(db.Float, nullable=False)
     date_time = db.Column(db.DateTime, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
 
     news = relationship('News', back_populates='market_data', lazy='dynamic')
@@ -21,7 +23,7 @@ class MarketData(db.Model):
 
     def to_dict(self):
         return {
-            'data_id': self.data_id,
+            'id': self.data_id,
             'asset_type': self.asset_type,
             'price': self.price,
             'high': self.high,
@@ -29,5 +31,7 @@ class MarketData(db.Model):
             'open': self.open,
             'close': self.close,
             'volume': self.volume,
-            'date_time': self.date_time.isoformat()
+            'date_time': self.date_time.isoformat(),
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat()
         }
