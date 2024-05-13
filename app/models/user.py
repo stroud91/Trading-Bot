@@ -18,8 +18,11 @@ class User(db.Model, UserMixin):
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
     last_login = db.Column(db.DateTime)
     # Relationships
-    accounts = relationship('Account', back_populates='user', cascade='all, delete-orphan')
-
+    accounts = relationship(
+        'Account',
+        back_populates='user',
+        primaryjoin="User.id==foreign(Account.user_id)"
+    )
     @property
     def password(self):
         return self.hashed_password

@@ -12,12 +12,18 @@ class Account(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     # Relationships
-    user = relationship('User', back_populates='accounts')
-    transactions = relationship('Transaction', back_populates='account', primaryjoin="Account.id == foreign(Transaction.account_id)")
+    user = relationship(
+        'User',
+        back_populates='accounts'
+    )
+    transactions = relationship(
+        'Transaction',
+        back_populates='account',
+        primaryjoin="Account.id==foreign(Transaction.account_id)"
+    )
     orders = relationship(
         'Order',
         back_populates='account',
-        cascade='all, delete-orphan',
         primaryjoin="Account.id==foreign(Order.account_id)"
     )
     def to_dict(self):

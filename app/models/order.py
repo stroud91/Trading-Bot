@@ -15,8 +15,10 @@ class Order(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     # Relationship
-    account = relationship('Account', back_populates='orders')
-
+    account = relationship(
+        'Account',
+        back_populates='orders'
+    )
     def to_dict(self):
         return {
             'id': self.id,

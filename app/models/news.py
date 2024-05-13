@@ -12,7 +12,10 @@ class News(db.Model):
     url = db.Column(db.String(255), nullable=False)
     market_data_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('market_data.id')), nullable=False)
 
-    market_data = relationship('MarketData', back_populates='news')
+    market_data = relationship(
+        'MarketData',
+        back_populates='news'
+    )
 
 
     def to_dict(self):

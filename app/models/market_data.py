@@ -18,7 +18,11 @@ class MarketData(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
 
-    news = relationship('News', back_populates='market_data', lazy='dynamic')
+    news = relationship(
+        'News',
+        back_populates='market_data',
+        primaryjoin="MarketData.id==foreign(News.market_data_id)"
+    )
 
 
     def to_dict(self):
