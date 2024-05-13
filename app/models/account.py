@@ -14,8 +14,12 @@ class Account(db.Model):
     # Relationships
     user = relationship('User', back_populates='accounts')
     transactions = relationship('Transaction', back_populates='account', primaryjoin="Account.id == foreign(Transaction.account_id)")
-    orders = relationship('Order', back_populates='account', cascade='all, delete-orphan')
-
+    orders = relationship(
+        'Order',
+        back_populates='account',
+        cascade='all, delete-orphan',
+        primaryjoin="Account.id==foreign(Order.account_id)"
+    )
     def to_dict(self):
         return {
             'id': self.id,
