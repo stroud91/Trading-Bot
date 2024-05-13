@@ -44,16 +44,6 @@ def seed_transactions():
         Transaction(account_id=38, type='withdrawal', amount=1650.00, created_at=datetime.utcnow()),
         Transaction(account_id=39, type='deposit', amount=1850.00, created_at=datetime.utcnow()),
         Transaction(account_id=40, type='withdrawal', amount=1750.00, created_at=datetime.utcnow()),
-        Transaction(account_id=41, type='deposit', amount=1950.00, created_at=datetime.utcnow()),
-        Transaction(account_id=42, type='withdrawal', amount=1850.00, created_at=datetime.utcnow()),
-        Transaction(account_id=43, type='deposit', amount=1950.00, created_at=datetime.utcnow()),
-        Transaction(account_id=44, type='withdrawal', amount=1850.00, created_at=datetime.utcnow()),
-        Transaction(account_id=45, type='deposit', amount=2050.00, created_at=datetime.utcnow()),
-        Transaction(account_id=46, type='withdrawal', amount=1950.00, created_at=datetime.utcnow()),
-        Transaction(account_id=47, type='deposit', amount=2150.00, created_at=datetime.utcnow()),
-        Transaction(account_id=48, type='withdrawal', amount=2050.00, created_at=datetime.utcnow()),
-        Transaction(account_id=49, type='deposit', amount=2250.00, created_at=datetime.utcnow()),
-        Transaction(account_id=50, type='withdrawal', amount=2150.00, created_at=datetime.utcnow())
     ]
     db.session.bulk_save_objects(transactions)
     db.session.commit()
