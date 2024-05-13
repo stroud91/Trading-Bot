@@ -103,3 +103,10 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+@app.route('/debug')
+def debug():
+    database_url = os.getenv('DATABASE_URL')
+    if not database_url:
+        return "DATABASE_URL environment variable is not set"
+    return f"DATABASE_URL: {database_url}"
