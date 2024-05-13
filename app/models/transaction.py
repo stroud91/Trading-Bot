@@ -14,6 +14,7 @@ class Transaction(db.Model):
     # Relationship
     account = relationship('Account', back_populates='transactions')
 
+
     def to_dict(self):
         return {
             'id': self.id,
