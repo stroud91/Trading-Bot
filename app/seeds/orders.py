@@ -1,6 +1,6 @@
 from app.models import db, Order, environment, SCHEMA
 from sqlalchemy.sql import text
-
+from datetime import datetime
 def seed_orders():
     orders = [
         Order(account_id=1, type='buy', status='completed', price=200.50, quantity=10, execution_price=200.50, created_at=datetime.utcnow()),

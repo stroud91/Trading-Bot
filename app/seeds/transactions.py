@@ -1,5 +1,6 @@
 from app.models import db, Transaction, environment, SCHEMA
 from sqlalchemy.sql import text
+from datetime import datetime
 
 def seed_transactions():
     transactions = [
@@ -43,7 +44,7 @@ def seed_transactions():
         Transaction(account_id=38, type='withdrawal', amount=1650.00, created_at=datetime.utcnow()),
         Transaction(account_id=39, type='deposit', amount=1850.00, created_at=datetime.utcnow()),
         Transaction(account_id=40, type='withdrawal', amount=1750.00, created_at=datetime.utcnow()),
-        Transaction(account_id=41, type='deposit', amount=1950.00, created_at=datetime    , created_at=datetime.utcnow()),
+        Transaction(account_id=41, type='deposit', amount=1950.00, created_at=datetime.utcnow()),
         Transaction(account_id=42, type='withdrawal', amount=1850.00, created_at=datetime.utcnow()),
         Transaction(account_id=43, type='deposit', amount=1950.00, created_at=datetime.utcnow()),
         Transaction(account_id=44, type='withdrawal', amount=1850.00, created_at=datetime.utcnow()),
