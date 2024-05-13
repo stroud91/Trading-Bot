@@ -5,6 +5,10 @@ from datetime import datetime
 
 class MarketData(db.Model):
     __tablename__ = 'market_data'
+    
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     asset_type = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Float, nullable=False)

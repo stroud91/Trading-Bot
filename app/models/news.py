@@ -5,6 +5,10 @@ from sqlalchemy.orm import relationship
 
 
 class News(db.Model):
+
+    if environment == "production":
+        __table_args__ = {'schema': SCHEMA}
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     publication_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
