@@ -24,7 +24,7 @@ def create_account():
         user_id=data['user_id'],
         balance=data['balance'],
         account_type=data['account_type'],
-        status=data.get('status', 'active')  # Default status if not provided
+        status=data.get('status', 'active')
     )
     db.session.add(new_account)
     db.session.commit()
@@ -38,7 +38,7 @@ def update_account(account_id):
         account.balance = data.get('balance', account.balance)
         account.account_type = data.get('account_type', account.account_type)
         account.status = data.get('status', account.status)
-        account.updated_at = datetime.utcnow()  # Update the 'updated_at' timestamp
+        account.updated_at = datetime.utcnow() 
         db.session.commit()
         return jsonify(account.to_dict()), 200
     else:
@@ -53,3 +53,18 @@ def delete_account(account_id):
         return jsonify({"message": "Account deleted successfully"}), 200
     else:
         return jsonify({"error": "Account not found"}), 404
+
+
+@account_bp.route('/account/<int:account_id>/balance_history', methods=['GET'])
+def get_balance_history(account_id):
+    account = Account.query.get(account_id)
+    if not account:
+        return jsonify({"error": "Account not found"}), 404
+
+    balance_history = Account.query.filter_by(account_id=account_id).order_by(Account.date.asc()).all()
+    history_data = [{
+        'date': history.date.strftime('%Y-%m-%d'),
+        'balance': history.balance
+    } for history in balance_history]
+
+    return jsonify(history_data), 200
