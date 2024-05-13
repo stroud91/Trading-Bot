@@ -13,7 +13,7 @@ class Account(db.Model):
 
     # Relationships
     user = relationship('User', back_populates='accounts')
-    transactions = relationship('Transaction', back_populates='account', cascade='all, delete-orphan')
+    transactions = relationship('Transaction', back_populates='accounts', cascade='all, delete-orphan')
     orders = relationship('Order', back_populates='account', cascade='all, delete-orphan')
 
     def to_dict(self):
