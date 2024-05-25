@@ -5,6 +5,12 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 20px 0;
+  transition: all 0.3s ease;
+}
+
+.market-graph:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
 .market-graph h2 {
@@ -13,6 +19,19 @@
 }
 
 #graph-container {
-  height: 400px;
+  height: 500px;
   width: 100%;
+}
+
+.recharts-tooltip-wrapper {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  padding: 10px;
+  color: white;
+}
+
+.recharts-legend-wrapper {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }

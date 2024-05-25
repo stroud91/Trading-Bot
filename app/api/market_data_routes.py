@@ -1,11 +1,15 @@
 from flask import Blueprint, jsonify, request
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.fundamentaldata import FundamentalData
+import requests
 import os
+
 
 market_data_bp = Blueprint('market_data_bp', __name__)
 
 api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+if not api_key:
+    raise ValueError("Missing Alpha Vantage API Key")
 ts = TimeSeries(key=api_key, output_format='pandas')
 
 
@@ -57,29 +61,37 @@ def get_top_stocks():
     return jsonify(top_stocks[:50]), 200
 
 
-# @market_data_bp.route('/graph/historical/<string:symbol>', methods=['GET'])
-# def get_historical_graph_data(symbol):
-#     try:
-
-#         data, meta_data = ts.get_daily(symbol=symbol, outputsize='full')
-
-#         graph_data = data['4. close'].rename('Close Price').to_frame()
-#         graph_data.index.name = 'Date'
-#         return jsonify(graph_data.reset_index().to_dict('records')), 200
-#     except Exception as e:
-#         return jsonify({'error': str(e)}), 500
-
-
 @market_data_bp.route('/graph/historical/<string:symbol>', methods=['GET'])
 def get_historical_graph_data(symbol):
     try:
-        data, meta_data = ts.get_daily(symbol=symbol, outputsize='full')
-        graph_data = data[['4. close', '2. high', '3. low']].rename(columns={
-            '4. close': 'Close Price',
-            '2. high': 'High Price',
-            '3. low': 'Low Price'
-        })
-        graph_data.index.name = 'Date'
-        return jsonify(graph_data.reset_index().to_dict('records')), 200
+
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&outputsize=full&apikey={api_key}"
+
+        response = requests.get(url)
+        data = response.json()
+
+        if "Error Message" in data:
+            return jsonify({'error': data["Error Message"]}), 400
+        if "Note" in data:
+            return jsonify({'error': data["Note"]}), 400
+
+
+        time_series = data.get("Time Series (Daily)")
+        if not time_series:
+            return jsonify({'error': 'No time series data found'}), 400
+
+        graph_data = [
+            {
+                'Date': date,
+                'Close Price': float(values['4. close']),
+                'High Price': float(values['2. high']),
+                'Low Price': float(values['3. low'])
+            }
+            for date, values in time_series.items()
+        ]
+
+        graph_data.sort(key=lambda x: x['Date'])
+
+        return jsonify(graph_data), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
