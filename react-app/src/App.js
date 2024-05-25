@@ -45,9 +45,8 @@ function App() {
           <Route path="/history">
             <AccountHistory />
           </Route>
-          <Route path="/market">
-            <MarketGraph />
-          </Route>
+          <Route path="/market/:symbol" render={(props) => <MarketGraph symbol={props.match.params.symbol} />} />
+          
         </Switch>
       )}
     </>

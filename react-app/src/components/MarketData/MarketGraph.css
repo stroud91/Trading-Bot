@@ -1,21 +1,18 @@
-.chart-container {
-    background-color: var(--secondary-bg-color);
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+.market-graph {
+  padding: 20px;
+  background-color: #1c1c28;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px 0;
+}
 
-  .chart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.market-graph h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .chart-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .chart {
-    height: 400px;
-  }
+#graph-container {
+  height: 400px;
+  width: 100%;
+}
