@@ -1,0 +1,39 @@
+.positions {
+    margin-left: 270px;
+    padding: 20px;
+  }
+
+  .positions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .positions-header h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .positions-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .positions-table th, .positions-table td {
+    padding: 15px;
+    text-align: left;
+  }
+
+  .positions-table th {
+    background-color: var(--secondary-bg-color);
+    color: var(--primary-text-color);
+  }
+
+  .positions-table td {
+    background-color: var(--primary-bg-color);
+    color: var(--secondary-text-color);
+  }
+
+  .positions-table tr:hover {
+    background-color: var(--secondary-bg-color);
+  }

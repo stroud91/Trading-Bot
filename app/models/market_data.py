@@ -5,7 +5,7 @@ from datetime import datetime
 
 class MarketData(db.Model):
     __tablename__ = 'market_data'
-    
+
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
@@ -22,11 +22,6 @@ class MarketData(db.Model):
     updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
 
-    news = relationship(
-        'News',
-        back_populates='market_data',
-        primaryjoin="MarketData.id==foreign(News.market_data_id)"
-    )
 
 
     def to_dict(self):
@@ -39,7 +34,7 @@ class MarketData(db.Model):
             'open': self.open,
             'close': self.close,
             'volume': self.volume,
-            'date_time': self.date_time.isoformat(),
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat()
+            'date_time': self.date_time,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

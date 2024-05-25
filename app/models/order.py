@@ -32,6 +32,6 @@ class Order(db.Model):
             'price': self.price,
             'quantity': self.quantity,
             'execution_price': self.execution_price,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat()
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

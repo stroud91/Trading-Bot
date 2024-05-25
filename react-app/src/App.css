@@ -1,0 +1,52 @@
+:root {
+    --primary-bg-color: #1c1c28;
+    --secondary-bg-color: #2b2b3b;
+    --primary-text-color: #ffffff;
+    --secondary-text-color: #b3b3b3;
+    --accent-color: #4caf50;
+    --danger-color: #ff4f4f;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+  }
+
+  a {
+    color: var(--primary-text-color);
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent-color);
+  }
+
+  button {
+    background-color: var(--accent-color);
+    color: var(--primary-text-color);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: darken(var(--accent-color), 10%);
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .card {
+    background-color: var(--secondary-bg-color);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }

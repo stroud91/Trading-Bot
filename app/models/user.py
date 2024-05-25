@@ -39,7 +39,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
-            'last_login': self.updated_at.isoformat()
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'last_login': self.updated_at
         }

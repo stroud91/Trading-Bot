@@ -37,8 +37,8 @@ class Account(db.Model):
             'user_id': self.user_id,
             'balance': self.balance,
             'account_type': self.account_type,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
             'transactions': [transaction.to_dict() for transaction in self.transactions],
             'orders': [order.to_dict() for order in self.orders]
         }

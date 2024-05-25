@@ -1,1 +1,50 @@
-/* TODO Add site wide styles */
+body {
+    background-color: #1c1c28;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #2c2c38;
+}
+
+nav ul li {
+    margin: 10px 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+nav ul li a.active {
+    background-color: #3c3c48;
+}
+
+.account-overview, .account-positions, .account-orders, .account-fees, .account-history, .market-graph {
+    padding: 20px;
+    margin: 20px;
+    background-color: #2c2c38;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #3c3c48;
+}
+
+h2 {
+    margin-bottom: 20px;
+}

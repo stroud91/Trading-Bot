@@ -28,6 +28,6 @@ class Transaction(db.Model):
             'account_id': self.account_id,
             'type': self.type,
             'amount': self.amount,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat()
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }

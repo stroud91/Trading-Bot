@@ -14,21 +14,14 @@ class News(db.Model):
     publication_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.Text, nullable=True)
     url = db.Column(db.String(255), nullable=False)
-    market_data_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('market_data.id')), nullable=False)
-
-    market_data = relationship(
-        'MarketData',
-        back_populates='news'
-    )
-
 
     def to_dict(self):
 
         return {
             'id': self.id,
             'title': self.title,
-            'publication_date': self.publication_date.isoformat(),
+            'publication_date': self.publication_date,
             'description': self.description,
             'url': self.url,
-            'market_data_id': self.market_data_id
+
         }
