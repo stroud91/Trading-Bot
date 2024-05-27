@@ -1,48 +1,119 @@
 
 
+const SET_TRANSACTIONS = "transactions/SET_TRANSACTIONS";
+const SET_TRANSACTION_DETAIL = "transactions/SET_TRANSACTION_DETAIL";
+const ADD_TRANSACTION = "transactions/ADD_TRANSACTION";
+const UPDATE_TRANSACTION = "transactions/UPDATE_TRANSACTION";
+const REMOVE_TRANSACTION = "transactions/REMOVE_TRANSACTION";
 
-// Constants
-const SET_POSITIONS = "transaction/SET_POSITIONS";
-const SET_HISTORY = "transaction/SET_HISTORY";
 
-// Action Creators
-const setPositions = (positions) => ({
-    type: SET_POSITIONS,
-    payload: positions,
+
+const setTransactions = (transactions) => ({
+    type: SET_TRANSACTIONS,
+    payload: transactions,
 });
 
-const setHistory = (history) => ({
-    type: SET_HISTORY,
-    payload: history,
+const setTransactionDetail = (transaction) => ({
+    type: SET_TRANSACTION_DETAIL,
+    payload: transaction,
 });
 
-// Initial State
-const initialState = { positions: [], history: [] };
+const addTransaction = (transaction) => ({
+    type: ADD_TRANSACTION,
+    payload: transaction,
+});
 
-// Thunks
-export const fetchPositions = (accountId) => async (dispatch) => {
-    const response = await fetch(`/api/positions/${accountId}`);
+const updateTransaction = (transaction) => ({
+    type: UPDATE_TRANSACTION,
+    payload: transaction,
+});
+
+const removeTransaction = (transactionId) => ({
+    type: REMOVE_TRANSACTION,
+    payload: transactionId,
+});
+
+
+export const fetchTransactions = () => async (dispatch) => {
+    const response = await fetch(`/api/transactions`);
     if (response.ok) {
         const data = await response.json();
-        dispatch(setPositions(data));
+        dispatch(setTransactions(data));
     }
 };
 
-export const fetchHistory = (accountId) => async (dispatch) => {
-    const response = await fetch(`/api/history/${accountId}`);
+export const fetchTransactionDetail = (transactionId) => async (dispatch) => {
+    const response = await fetch(`/api/transactions/${transactionId}`);
     if (response.ok) {
         const data = await response.json();
-        dispatch(setHistory(data));
+        dispatch(setTransactionDetail(data));
     }
 };
 
-// Reducer
+export const createTransaction = (transactionData) => async (dispatch) => {
+    const response = await fetch(`/api/transactions`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(transactionData)
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(addTransaction(data));
+    }
+};
+
+export const updateTransactionDetails = (transactionId, transactionData) => async (dispatch) => {
+    const response = await fetch(`/api/transactions/${transactionId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(transactionData)
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(updateTransaction(data));
+    }
+};
+
+export const deleteTransaction = (transactionId) => async (dispatch) => {
+    const response = await fetch(`/api/transactions/${transactionId}`, {
+        method: 'DELETE'
+    });
+    if (response.ok) {
+        dispatch(removeTransaction(transactionId));
+    }
+};
+
+const initialState = {
+    transactions: [],
+    transactionDetail: null,
+};
+
 export default function transactionReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_POSITIONS:
-            return { ...state, positions: action.payload };
-        case SET_HISTORY:
-            return { ...state, history: action.payload };
+        case SET_TRANSACTIONS:
+            return { ...state, transactions: action.payload };
+        case SET_TRANSACTION_DETAIL:
+            return { ...state, transactionDetail: action.payload };
+        case ADD_TRANSACTION:
+            return { ...state, transactions: [...state.transactions, action.payload] };
+        case UPDATE_TRANSACTION:
+            return {
+                ...state,
+                transactions: state.transactions.map(transaction =>
+                    transaction.id === action.payload.id ? action.payload : transaction
+                ),
+                transactionDetail: state.transactionDetail && state.transactionDetail.id === action.payload.id ? action.payload : state.transactionDetail
+            };
+        case REMOVE_TRANSACTION:
+            return {
+                ...state,
+                transactions: state.transactions.filter(transaction => transaction.id !== action.payload),
+                transactionDetail: state.transactionDetail && state.transactionDetail.id === action.payload ? null : state.transactionDetail
+            };
         default:
             return state;
     }
