@@ -6,7 +6,6 @@ import LoginFormPage from "./components/LoginFormPage";
 import AccountOverview from "./components/Account/AccountOverview";
 import AccountPositions from "./components/Account/AccountPositions";
 import AccountOrders from "./components/Account/AccountOrders";
-import AccountFees from "./components/Account/AccountFees";
 import AccountHistory from "./components/Account/AccountHistory";
 import MarketGraph from "./components/MarketData/MarketGraph";
 import { authenticate } from "./store/session";
@@ -40,9 +39,6 @@ function App() {
           </Route>
           <Route path="/orders">
             <AccountOrders />
-          </Route>
-          <Route path="/fees">
-            <AccountFees />
           </Route>
           <Route path="/history">
             <AccountHistory />

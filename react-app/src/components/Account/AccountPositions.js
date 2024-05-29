@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPositions } from '../../store/transaction';
+import { fetchTransactions } from '../../store/transaction';
 import './AccountPositions.css';
 
 const AccountPositions = ({ accountId }) => {
@@ -8,7 +8,7 @@ const AccountPositions = ({ accountId }) => {
     const positions = useSelector(state => state.transaction.positions);
 
     useEffect(() => {
-        dispatch(fetchPositions(accountId));
+        dispatch(fetchTransactions(accountId));
     }, [dispatch, accountId]);
 
     return (

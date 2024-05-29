@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAccount } from '../../store/account';
+import { fetchAccounts } from '../../store/account';
 import { fetchOrders } from '../../store/order';
 import { fetchTransactions } from '../../store/transaction';
 import AccountOrders from './AccountOrders';
 import AccountPositions from './AccountPositions';
 import AccountHistory from './AccountHistory';
-import AccountFees from './AccountFees';
 import './AccountOverview.css';
 
 const AccountOverview = ({ accountId }) => {
@@ -16,7 +15,7 @@ const AccountOverview = ({ accountId }) => {
     const transactions = useSelector(state => state.transaction.transactions);
 
     useEffect(() => {
-        dispatch(fetchAccount(accountId));
+        dispatch(fetchAccounts(accountId));
         dispatch(fetchOrders(accountId));
         dispatch(fetchTransactions(accountId));
     }, [dispatch, accountId]);
@@ -39,7 +38,6 @@ const AccountOverview = ({ accountId }) => {
             <AccountOrders orders={orders} />
             <AccountPositions transactions={transactions} />
             <AccountHistory accountId={accountId} />
-            <AccountFees accountId={accountId} />
         </div>
     );
 };

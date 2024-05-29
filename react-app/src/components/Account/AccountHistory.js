@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchHistory } from '../../store/transaction';
+import { fetchTransactions } from '../../store/transaction';
 import './AccountHistory.css';
 
 const AccountHistory = ({ accountId }) => {
@@ -8,7 +8,7 @@ const AccountHistory = ({ accountId }) => {
     const history = useSelector(state => state.transaction.history);
 
     useEffect(() => {
-        dispatch(fetchHistory(accountId));
+        dispatch(fetchTransactions(accountId));
     }, [dispatch, accountId]);
 
     return (
