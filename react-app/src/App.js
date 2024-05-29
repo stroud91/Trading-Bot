@@ -11,6 +11,7 @@ import AccountHistory from "./components/Account/AccountHistory";
 import MarketGraph from "./components/MarketData/MarketGraph";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import MainPage from "./components/MainPage/MainPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
+          <Route exact path="/" component={MainPage} />
           <Route path="/login">
             <LoginFormPage />
           </Route>
@@ -46,7 +48,6 @@ function App() {
             <AccountHistory />
           </Route>
           <Route path="/market/:symbol" render={(props) => <MarketGraph symbol={props.match.params.symbol} />} />
-          
         </Switch>
       )}
     </>

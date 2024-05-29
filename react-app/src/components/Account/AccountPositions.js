@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPositions } from '../../store/ transaction';
+import { fetchPositions } from '../../store/transaction';
 import './AccountPositions.css';
 
-const AccountPositions = () => {
+const AccountPositions = ({ accountId }) => {
     const dispatch = useDispatch();
     const positions = useSelector(state => state.transaction.positions);
 
     useEffect(() => {
-        dispatch(fetchPositions(1)); // Assuming accountId = 1 for demo
-    }, [dispatch]);
+        dispatch(fetchPositions(accountId));
+    }, [dispatch, accountId]);
 
     return (
         <div className="account-positions">

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrders } from '../../store/order';
 import './AccountOrders.css';
 
-const AccountOrders = () => {
+const AccountOrders = ({ accountId }) => {
     const dispatch = useDispatch();
     const orders = useSelector(state => state.order.orders);
 
     useEffect(() => {
-        dispatch(fetchOrders(1)); // Assuming accountId = 1 for demo
-    }, [dispatch]);
+        dispatch(fetchOrders(accountId));
+    }, [dispatch, accountId]);
 
     return (
         <div className="account-orders">

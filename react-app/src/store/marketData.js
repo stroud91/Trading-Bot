@@ -1,7 +1,7 @@
-// Constants
+
 const SET_MARKET_DATA = "marketData/SET_MARKET_DATA";
 const SET_HISTORICAL_DATA = "marketData/SET_HISTORICAL_DATA";
-// Action Creators
+
 
 const setMarketData = (data) => ({
     type: SET_MARKET_DATA,
@@ -14,7 +14,6 @@ const setHistoricalData = (data) => ({
 });
 
 
-// Thunks
 export const fetchMarketData = () => async (dispatch) => {
     const response = await fetch(`/api/main/marketData`);
     if (response.ok) {
@@ -23,7 +22,6 @@ export const fetchMarketData = () => async (dispatch) => {
     }
 };
 
-// Thunks
 export const fetchHistoricalData = (symbol) => async (dispatch) => {
     const response = await fetch(`/api/main/graph/historical/${symbol}`);
     if (response.ok) {
@@ -34,9 +32,6 @@ export const fetchHistoricalData = (symbol) => async (dispatch) => {
 
 const initialState = { historicalData: null, data: null };
 
-
-
-// Reducer
 export default function marketDataReducer(state = initialState, action) {
     switch (action.type) {
         case SET_MARKET_DATA:

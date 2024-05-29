@@ -1,41 +1,39 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchHistory } from '../../store/ transaction';
+import { fetchHistory } from '../../store/transaction';
 import './AccountHistory.css';
 
-const AccountHistory = () => {
+const AccountHistory = ({ accountId }) => {
     const dispatch = useDispatch();
     const history = useSelector(state => state.transaction.history);
 
     useEffect(() => {
-        dispatch(fetchHistory(1));
-    }, [dispatch]);
+        dispatch(fetchHistory(accountId));
+    }, [dispatch, accountId]);
 
     return (
         <div className="account-history">
-            <h2>History</h2>
+            <h2>Account History</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Type</th>
+                        <th>Transaction Type</th>
                         <th>Amount</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     {history.length > 0 ? (
-                        history.map(transaction => (
-                            <tr key={transaction.id}>
-                                <td>{transaction.date}</td>
-                                <td>{transaction.type}</td>
-                                <td>{transaction.amount}</td>
-                                <td>{transaction.status}</td>
+                        history.map(entry => (
+                            <tr key={entry.id}>
+                                <td>{entry.date}</td>
+                                <td>{entry.transaction_type}</td>
+                                <td>{entry.amount}</td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4">No history available.</td>
+                            <td colSpan="3">You have no transaction history.</td>
                         </tr>
                     )}
                 </tbody>
