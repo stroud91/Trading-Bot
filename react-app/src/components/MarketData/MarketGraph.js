@@ -1,46 +1,119 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-    Brush, AreaChart, Area, ReferenceLine, ReferenceDot, ReferenceArea
-} from 'recharts';
-import { fetchHistoricalData } from '../../store/marketData';
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+} from "recharts";
+import { fetchTransactions, createTransaction } from '../../store/transaction';
+import { createOrder, fetchOrders} from '../../store/order';
+import { fetchHistoricalData} from '../../store/marketData';
+import { fetchNews } from '../../store/news';
 import './MarketGraph.css';
 
 const MarketGraph = ({ symbol }) => {
     const dispatch = useDispatch();
+    const [timeFrame, setTimeFrame] = useState("1m");
     const historicalData = useSelector((state) => state.marketData.historicalData);
+    const newsData = useSelector((state) => state.news.news);
+    const accountData = useSelector((state) => state.accounts.accountDetail);
+    const user = useSelector((state) => state.session.user);
+    const transactions = useSelector((state) => state.transactions.transactions);
+    const orders = useSelector((state) => state.orders.orders);
 
     useEffect(() => {
-        dispatch(fetchHistoricalData(symbol));
-    }, [dispatch, symbol]);
+        dispatch(fetchHistoricalData(symbol, timeFrame));
+        dispatch(fetchNews(symbol));
+        if (user) {
+            dispatch(fetchOrders());
+            dispatch(fetchTransactions());
+        }
+    }, [dispatch, symbol, timeFrame, user]);
+
+    const handleTimeFrameChange = (frame) => {
+        setTimeFrame(frame);
+    };
+
+    const handleBuy = () => {
+        const orderData = {
+            account_id: accountData.id,
+            type: "buy",
+            status: "open",
+            price: historicalData[historicalData.length - 1]["Close Price"],
+            quantity: 1
+        };
+        dispatch(createOrder(orderData));
+        const transactionData = {
+            account_id: accountData.id,
+            type: "buy",
+            amount: orderData.price * orderData.quantity
+        };
+        dispatch(createTransaction(transactionData));
+    };
+
+    const handleSell = () => {
+        const orderData = {
+            account_id: accountData.id,
+            type: "sell",
+            status: "open",
+            price: historicalData[historicalData.length - 1]["Close Price"],
+            quantity: 1
+        };
+        dispatch(createOrder(orderData));
+        const transactionData = {
+            account_id: accountData.id,
+            type: "sell",
+            amount: orderData.price * orderData.quantity
+        };
+        dispatch(createTransaction(transactionData));
+    };
 
     return (
-        <div className="market-graph">
-            <h2>{symbol} Market Graph</h2>
-            {historicalData ? (
-                <ResponsiveContainer width="100%" height={500}>
-                    <AreaChart data={historicalData}>
-                        <defs>
-                            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                                <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                            </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="Date" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Brush dataKey="Date" height={30} stroke="#8884d8" />
-                        <Area type="monotone" dataKey="Close Price" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-                        <Line type="monotone" dataKey="High Price" stroke="#82ca9d" />
-                        <Line type="monotone" dataKey="Low Price" stroke="#ffc658" />
-                    </AreaChart>
-                </ResponsiveContainer>
-            ) : (
-                <p>Loading...</p>
-            )}
+        <div className="market-graph-container">
+            <div className="graph-section">
+                <h2>{symbol} Market Graph</h2>
+                <div className="time-frame-buttons">
+                    <button onClick={() => handleTimeFrameChange("1d")}>1D</button>
+                    <button onClick={() => handleTimeFrameChange("1w")}>1W</button>
+                    <button onClick={() => handleTimeFrameChange("1m")}>1M</button>
+                    <button onClick={() => handleTimeFrameChange("1y")}>1Y</button>
+                </div>
+                {historicalData ? (
+                    <ResponsiveContainer width="100%" height={400}>
+                        <LineChart data={historicalData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="Date" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line type="monotone" dataKey="Close Price" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                ) : (
+                    <p>Loading...</p>
+                )}
+                {user && (
+                    <div className="buy-sell-options">
+                        <button className="buy-button" onClick={handleBuy}>Buy</button>
+                        <button className="sell-button" onClick={handleSell}>Sell</button>
+                    </div>
+                )}
+            </div>
+            <div className="news-section">
+                <h2>{symbol} News</h2>
+                {newsData ? (
+                    <ul className="news-list">
+                        {newsData.map((newsItem, index) => (
+                            <li key={index} className="news-item">
+                                <a href={newsItem.url} target="_blank" rel="noopener noreferrer">
+                                    <h3>{newsItem.title}</h3>
+                                    <p>{newsItem.description}</p>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>Loading news...</p>
+                )}
+            </div>
         </div>
     );
 };
