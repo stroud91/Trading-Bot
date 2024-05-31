@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateOrder, fetchOrderDetail } from '../../store/order';
+import { updateOrderDetails, fetchOrderDetail } from '../../store/order';
 import { useModal } from '../../context/Modal';
 import './OrderForm.css';
 
@@ -36,7 +36,7 @@ const OrderFormUpdate = ({ orderId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(updateOrder(orderId, formData));
+    await dispatch(updateOrderDetails(orderId, formData));
     closeModal();
   };
 

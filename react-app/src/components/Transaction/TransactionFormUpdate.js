@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateTransaction, fetchTransactionDetail } from '../../store/transaction';
+import { updateTransactionDetails, fetchTransactionDetail } from '../../store/transaction';
 import { useModal } from '../../context/Modal';
 import './TransactionForm.css';
 
@@ -32,7 +32,7 @@ const TransactionFormUpdate = ({ transactionId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(updateTransaction(transactionId, formData));
+    await dispatch(updateTransactionDetails(transactionId, formData));
     closeModal();
   };
 

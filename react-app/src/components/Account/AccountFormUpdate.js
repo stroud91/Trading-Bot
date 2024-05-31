@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateAccount, fetchAccountDetail } from '../../store/account';
+import { updateAccountDetails, fetchAccountDetail } from '../../store/account';
 import { useModal } from '../../context/Modal';
 import './AccountForm.css';
 
@@ -32,7 +32,7 @@ const AccountFormUpdate = ({ accountId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(updateAccount(accountId, formData));
+    await dispatch(updateAccountDetails(accountId, formData));
     closeModal();
   };
 
