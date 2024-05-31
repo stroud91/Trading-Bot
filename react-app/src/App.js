@@ -11,6 +11,15 @@ import MarketGraph from "./components/MarketData/MarketGraph";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import MainPage from "./components/MainPage/MainPage";
+import AccountFormCreate from "./components/Account/AccountFormCreate";
+import AccountFormUpdate from "./components/Account/AccountFormUpdate";
+import AccountFormDelete from "./components/Account/AccountFormDelete";
+import OrderFormCreate from "./components/Order/OrderFormCreate";
+import OrderFormUpdate from "./components/Order/OrderFormUpdate";
+import OrderFormDelete from "./components/Order/OrderFormDelete";
+import TransactionFormCreate from "./components/Transaction/TransactionFormCreate";
+import TransactionFormUpdate from "./components/Transaction/TransactionFormUpdate";
+import TransactionFormDelete from "./components/Transaction/TransactionFormDelete";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +53,15 @@ function App() {
             <AccountHistory />
           </Route>
           <Route path="/market/:symbol" render={(props) => <MarketGraph symbol={props.match.params.symbol} />} />
+          <Route path="/account/create" component={AccountFormCreate} />
+          <Route path="/account/update/:accountId" component={AccountFormUpdate} />
+          <Route path="/account/delete/:accountId" component={AccountFormDelete} />
+          <Route path="/order/create" component={OrderFormCreate} />
+          <Route path="/order/update/:orderId" component={OrderFormUpdate} />
+          <Route path="/order/delete/:orderId" component={OrderFormDelete} />
+          <Route path="/transaction/create" component={TransactionFormCreate} />
+          <Route path="/transaction/update/:transactionId" component={TransactionFormUpdate} />
+          <Route path="/transaction/delete/:transactionId" component={TransactionFormDelete} />
         </Switch>
       )}
     </>
