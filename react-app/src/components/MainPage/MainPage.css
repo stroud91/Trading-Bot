@@ -7,7 +7,7 @@
 body, html {
     height: 100%;
     font-family: 'Arial', sans-serif;
-    color: white;
+    color: #F8F9FA;
 }
 
 .main-page {
@@ -33,53 +33,22 @@ body, html {
     object-fit: cover;
 }
 
+.main-logo {
+    max-width: 500px;
+    margin-bottom: 10px;
+
+}
+
 .content {
     position: relative;
     z-index: 1;
     text-align: center;
-    padding-top: 20vh;
+    padding-top: 15vh;
     padding-bottom: 20vh;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 2;
-}
-
-header .logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-}
-
-header nav ul li {
-    margin: 0 15px;
-}
-
-header nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-header nav ul li a:hover {
-    color: #FFD700;
-}
-
 .hero-section {
-    margin-top: 20vh;
+    margin-top: 1vh;
 }
 
 .hero-section h1 {
@@ -93,7 +62,7 @@ header nav ul li a:hover {
 }
 
 .cta-buttons button {
-    background-color: #FFD700;
+    background-color: #FFD700; /* Gold color matching the logo */
     color: black;
     border: none;
     padding: 15px 30px;
@@ -105,5 +74,9 @@ header nav ul li a:hover {
 }
 
 .cta-buttons button:hover {
-    background-color: #FFA500;
+    background-color: #FFA500; /* Darker gold for hover */
+}
+
+::-webkit-scrollbar {
+    display: none;
 }

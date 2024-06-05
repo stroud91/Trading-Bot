@@ -1,6 +1,8 @@
 import React from 'react';
 import './MainPage.css';
-import video from '../../assets/background.mp4'
+import video from '../../assets/background.mp4';
+import logo from '../../assets/logo2.png';
+
 const MainPage = () => {
   return (
     <div className="main-page">
@@ -11,20 +13,8 @@ const MainPage = () => {
         </video>
       </div>
       <div className="content">
-        <header>
-          <div className="logo">Your Logo</div>
-          <nav>
-            <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#cases">Cases</a></li>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#contact">Contact Us</a></li>
-            </ul>
-          </nav>
-        </header>
         <div className="hero-section">
+          <img src={logo} alt="Trading Bros" className="main-logo" />
           <h1>Manage Your Investments Easily and Effectively</h1>
           <p>20 years in Stock Market</p>
           <div className="cta-buttons">
