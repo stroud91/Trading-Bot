@@ -167,4 +167,3 @@ def get_historical_graph_data(symbol):
         return jsonify(graph_data), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
