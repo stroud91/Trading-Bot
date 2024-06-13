@@ -92,12 +92,7 @@ def get_stock_overview(symbol):
 
 @market_data_bp.route('/stocks/top', methods=['GET'])
 def get_top_stocks():
-    symbols = ['AAPL', 'MSFT', 'GOOGL', 'FB', 'AMZN', 'NFLX', 'INTC',
-               'AMD', 'NVDA', 'ORCL', 'JPM', 'BAC', 'WFC', 'C', 'GS', 'JNJ',
-               'PFE', 'MRK', 'GILD', 'AMGN', 'PG', 'KO', 'PEP', 'NKE', 'TSLA',
-               'XOM', 'CVX', 'BP', 'COP', 'SLB', 'GE', 'MMM', 'BA', 'HON', 'CAT',
-               'T', 'VZ', 'TMUS', 'NOK', 'ERIC', 'DUK', 'NEE', 'D', 'SO', 'EXC',
-               'AMT', 'PLD', 'SPG', 'WY', 'VTR']
+    symbols = ['AAPL', 'MSFT', 'GOOGL', 'FB', 'AMZN', 'NFLX', 'INTC']
 
     top_stocks = []
     for symbol in symbols:

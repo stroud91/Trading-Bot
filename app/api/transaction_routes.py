@@ -28,7 +28,7 @@ def create_transaction():
     if account and account.user_id == current_user.id:
         new_transaction = Transaction(
             account_id=data['account_id'],
-            transaction_type=data['type'],
+            type=data['type'],
             amount=data['amount'],
             created_at=datetime.utcnow()
         )
