@@ -1,0 +1,91 @@
+.about-us {
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    color: #343a40;
+  }
+
+  .about-us .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .about-us h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .about-us .intro {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .about-us .history,
+  .about-us .mission-vision,
+  .about-us .team,
+  .about-us .values {
+    margin-bottom: 40px;
+  }
+
+  .about-us h3 {
+    font-size: 32px;
+    margin-bottom: 15px;
+  }
+
+  .about-us p {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .about-us .team-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .about-us .team-member {
+    flex: 1 1 30%;
+    max-width: 30%;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .about-us .team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  .about-us .team-member h4 {
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+
+  .about-us .team-member p {
+    font-size: 18px;
+    color: #6c757d;
+  }
+
+  .about-us .values ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .about-us .values li {
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .about-us .values li:before {
+    content: '✔️';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #28a745;
+  }
