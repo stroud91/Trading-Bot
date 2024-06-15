@@ -1,16 +1,23 @@
 from flask import Blueprint, jsonify, request
 from alpha_vantage.timeseries import TimeSeries
-from alpha_vantage.fundamentaldata import FundamentalData
 import requests
 import os
 
 
 market_data_bp = Blueprint('market_data_bp', __name__)
 
-api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
-if not api_key:
+alpha_vantage_api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+finnhub_api_key = os.getenv('FINNHUB_API_KEY')
+finnhub_secret = os.getenv('FINNHUB_SECRET')
+if not alpha_vantage_api_key:
     raise ValueError("Missing Alpha Vantage API Key")
-ts = TimeSeries(key=api_key, output_format='pandas')
+if not finnhub_api_key:
+    raise ValueError("Missing Finnhub API Key")
+if not finnhub_secret:
+    raise ValueError("Missing Finnhub Secret")
+
+ts = TimeSeries(key=alpha_vantage_api_key, output_format='pandas')
+
 
 
 # @market_data_bp.route('/market_data/real_time/<string:symbol>', methods=['GET'])
@@ -62,38 +69,61 @@ ts = TimeSeries(key=api_key, output_format='pandas')
 
 
 
+# Function to make requests to Finnhub API
+def get_finnhub_data(endpoint, params):
+    url = f"https://finnhub.io/api/v1/{endpoint}"
+    headers = {
+        'X-Finnhub-Token': finnhub_api_key,
+        'X-Finnhub-Secret': finnhub_secret
+    }
+    response = requests.get(url, headers=headers, params=params)
+    return response.json()
+
 @market_data_bp.route('/market_data/real_time/<string:symbol>', methods=['GET'])
 def get_real_time_data(symbol):
-    data, meta_data = ts.get_intraday(symbol=symbol, interval='1min', outputsize='compact')
-    return jsonify(data.to_dict('records')), 200
+    endpoint = "quote"
+    params = {"symbol": symbol}
+    data = get_finnhub_data(endpoint, params)
+    if "error" in data:
+        return jsonify(data), 400
+    return jsonify(data), 200
 
 @market_data_bp.route('/market_data/historical/<string:symbol>', methods=['GET'])
 def get_historical_data(symbol):
-    data, meta_data = ts.get_daily(symbol=symbol, outputsize='full')
-    return jsonify(data.to_dict('records')), 200
+    endpoint = "stock/candle"
+    params = {
+        "symbol": symbol,
+        "resolution": "D",
+        "from": int((datetime.now() - timedelta(days=365)).timestamp()),
+        "to": int(datetime.now().timestamp())
+    }
+    data = get_finnhub_data(endpoint, params)
+    if "error" in data:
+        return jsonify(data), 400
+    return jsonify(data), 200
 
 @market_data_bp.route('/market_data/overview/<string:symbol>', methods=['GET'])
 def get_stock_overview(symbol):
-    fd = FundamentalData(key=api_key, output_format='pandas')
-    overview, _ = fd.get_company_overview(symbol=symbol)
-    return jsonify(overview.to_dict('records')[0]), 200
+    endpoint = "stock/profile2"
+    params = {"symbol": symbol}
+    data = get_finnhub_data(endpoint, params)
+    if "error" in data:
+        return jsonify(data), 400
+    return jsonify(data), 200
 
 @market_data_bp.route('/stocks/top', methods=['GET'])
 def get_top_stocks():
     symbols = ['AAPL', 'MSFT', 'GOOGL', 'FB', 'AMZN', 'NFLX', 'INTC']
-
     top_stocks = []
+
     for symbol in symbols:
-        try:
-            data, meta_data = ts.get_intraday(symbol=symbol, interval='1min', outputsize='compact')
-            if data.empty:
-                continue
-            last_entry = data.iloc[-1].to_dict()
-            last_entry['symbol'] = symbol
-            top_stocks.append(last_entry)
-        except ValueError as e:
-            print(f"Error retrieving data for {symbol}: {e}")
+        endpoint = "quote"
+        params = {"symbol": symbol}
+        data = get_finnhub_data(endpoint, params)
+        if "error" in data:
             continue
+        data['symbol'] = symbol
+        top_stocks.append(data)
 
     if not top_stocks:
         return jsonify({"error": "No valid stock data retrieved"}), 400
