@@ -2,12 +2,7 @@ import React from 'react';
 import './MainPage.css';
 import video from '../../assets/background.mp4';
 import logo from '../../assets/logo2.png';
-import AboutUs from './AboutUs';
-import Testimonials from './Testimonials';
-import Cases from './Cases';
-import Services from './Services';
-import Blog from './Blog';
-import ContactUs from './ContactUs';
+
 
 const MainPage = () => {
   return (
@@ -28,12 +23,6 @@ const MainPage = () => {
             <button onClick={() => window.location.href='/signup'}>Sign Up</button>
           </div>
         </div>
-        <AboutUs />
-        <Testimonials />
-        <Cases />
-        <Services />
-        <Blog />
-        <ContactUs />
       </div>
     </div>
   );
