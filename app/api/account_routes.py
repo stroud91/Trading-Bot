@@ -28,7 +28,6 @@ def create_account():
         user_id=current_user.id,
         balance=data['balance'],
         account_type=data['account_type'],
-        status=data.get('status', 'active')
     )
     db.session.add(new_account)
     db.session.commit()
@@ -42,7 +41,6 @@ def update_account(account_id):
         data = request.get_json()
         account.balance = data.get('balance', account.balance)
         account.account_type = data.get('account_type', account.account_type)
-        account.status = data.get('status', account.status)
         account.updated_at = datetime.utcnow()
         db.session.commit()
         return jsonify(account.to_dict()), 200

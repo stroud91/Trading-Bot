@@ -13,7 +13,6 @@ from .api.order_routes import order_bp
 from .api.market_data_routes import market_data_bp
 from .api.news_routes import news_bp
 
-
 from .api.api_Test import stock_api
 from .seeds import seed_commands
 from .config import Config
@@ -42,6 +41,7 @@ app.register_blueprint(transaction_bp, url_prefix='/api/transactions')
 app.register_blueprint(order_bp, url_prefix='/api/orders')
 app.register_blueprint(market_data_bp, url_prefix='/api/main')
 app.register_blueprint(news_bp, url_prefix='/api/news')
+
 db.init_app(app)
 Migrate(app, db)
 

@@ -20,6 +20,15 @@ import OrderFormDelete from "./components/Order/OrderFormDelete";
 import TransactionFormCreate from "./components/Transaction/TransactionFormCreate";
 import TransactionFormUpdate from "./components/Transaction/TransactionFormUpdate";
 import TransactionFormDelete from "./components/Transaction/TransactionFormDelete";
+import MarketData from "./components/MarketData/MarketData";
+import AboutUs from './components/MainPage/AboutUs';
+import Testimonials from './components/MainPage/Testimonials';
+import Cases from './components/MainPage/Cases';
+import Services from './components/MainPage/Services';
+import Blog from './components/MainPage/Blog';
+import ContactUs from './components/MainPage/ContactUs';
+import Chat from "./components/Chat/Chat";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +61,23 @@ function App() {
           <Route path="/history">
             <AccountHistory />
           </Route>
+          <Route path="/about">
+            <AboutUs />
+          </Route>
+          <Route path="/services">
+            <Services />
+          </Route>
+          <Route path="/cases">
+            <Cases />
+          </Route>
+          <Route path="/blog">
+            <Blog />
+          </Route>
+          <Route path="/contact">
+            <ContactUs />
+          </Route>
           <Route path="/market/:symbol" render={(props) => <MarketGraph symbol={props.match.params.symbol} />} />
+          <Route path="/market-data" render={(props) => <MarketData userId={props.match.params.userId} />} />
           <Route path="/account/create" component={AccountFormCreate} />
           <Route path="/account/update/:accountId" component={AccountFormUpdate} />
           <Route path="/account/delete/:accountId" component={AccountFormDelete} />
@@ -64,6 +89,7 @@ function App() {
           <Route path="/transaction/delete/:transactionId" component={TransactionFormDelete} />
         </Switch>
       )}
+      <Chat />
     </>
   );
 }

@@ -40,7 +40,7 @@ def create_order():
         # Create a corresponding transaction
         new_transaction = Transaction(
             account_id=data['account_id'],
-            transaction_type='Order Placement',
+            type='Order Placement',
             amount=new_order.price * new_order.quantity,
             created_at=datetime.utcnow()
         )

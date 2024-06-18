@@ -28,7 +28,7 @@ def create_transaction():
     if account and account.user_id == current_user.id:
         new_transaction = Transaction(
             account_id=data['account_id'],
-            transaction_type=data['type'],
+            type=data['type'],
             amount=data['amount'],
             created_at=datetime.utcnow()
         )
@@ -38,19 +38,19 @@ def create_transaction():
     else:
         return jsonify({"error": "Account not found or unauthorized"}), 404
 
-@transaction_bp.route('/transactions/<int:transaction_id>', methods=['PUT'])
-@login_required
-def update_transaction(transaction_id):
-    transaction = Transaction.query.join(Account).filter(Transaction.id == transaction_id, Account.user_id == current_user.id).first()
-    if transaction:
-        data = request.get_json()
-        transaction.transaction_type = data.get('type', transaction.transaction_type)
-        transaction.amount = data.get('amount', transaction.amount)
-        transaction.updated_at = datetime.utcnow()
-        db.session.commit()
-        return jsonify(transaction.to_dict()), 200
-    else:
-        return jsonify({"error": "Transaction not found or unauthorized"}), 404
+# @transaction_bp.route('/transactions/<int:transaction_id>', methods=['PUT'])
+# @login_required
+# def update_transaction(transaction_id):
+#     transaction = Transaction.query.join(Account).filter(Transaction.id == transaction_id, Account.user_id == current_user.id).first()
+#     if transaction:
+#         data = request.get_json()
+#         transaction.transaction_type = data.get('type', transaction.transaction_type)
+#         transaction.amount = data.get('amount', transaction.amount)
+#         transaction.updated_at = datetime.utcnow()
+#         db.session.commit()
+#         return jsonify(transaction.to_dict()), 200
+#     else:
+#         return jsonify({"error": "Transaction not found or unauthorized"}), 404
 
 @transaction_bp.route('/transactions/<int:transaction_id>', methods=['DELETE'])
 @login_required

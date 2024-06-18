@@ -3,6 +3,7 @@ import './MainPage.css';
 import video from '../../assets/background.mp4';
 import logo from '../../assets/logo2.png';
 
+
 const MainPage = () => {
   return (
     <div className="main-page">

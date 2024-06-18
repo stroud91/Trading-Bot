@@ -41,19 +41,19 @@ function Navigation({ isLoaded }) {
                             </>
                         )}
                         <li>
-                            <NavLink to="#about" activeClassName="active">About Us</NavLink>
+                            <NavLink to="/about" activeClassName="active">About Us</NavLink>
                         </li>
                         <li>
-                            <NavLink to="#services" activeClassName="active">Services</NavLink>
+                            <NavLink to="/services" activeClassName="active">Services</NavLink>
                         </li>
                         <li>
-                            <NavLink to="#cases" activeClassName="active">Cases</NavLink>
+                            <NavLink to="/cases" activeClassName="active">Cases</NavLink>
                         </li>
                         <li>
-                            <NavLink to="#blog" activeClassName="active">Blog</NavLink>
+                            <NavLink to="/blog" activeClassName="active">Blog</NavLink>
                         </li>
                         <li>
-                            <NavLink to="#contact" activeClassName="active">Contact Us</NavLink>
+                            <NavLink to="/contact" activeClassName="active">Contact Us</NavLink>
                         </li>
                     </ul>
                 </nav>
