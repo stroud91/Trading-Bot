@@ -5,14 +5,18 @@ const Chat = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!input.trim()) return;
+
     setLoading(true);
     setError('');
-    setMessages([...messages, { role: 'user', content: input }]);
+    const userMessage = { role: "user", content: input };
+    setMessages([...messages, userMessage]);
+    setInput('');
 
     try {
       const res = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -24,8 +28,9 @@ const Chat = () => {
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
           messages: [
-            ...messages.map(msg => ({ role: msg.role, content: msg.content })),
-            { role: "user", content: input }
+            { role: "system", content: "You are a helpful assistant." },
+            ...messages,
+            userMessage
           ],
           max_tokens: 150
         })
@@ -38,20 +43,20 @@ const Chat = () => {
       }
 
       const data = await res.json();
-      setMessages([...messages, { role: 'assistant', content: data.choices[0].message['content'].trim() }]);
+      const aiMessage = { role: "assistant", content: data.choices[0]?.message?.content?.trim() || 'No response from AI.' };
+      setMessages([...messages, userMessage, aiMessage]);
     } catch (err) {
       console.error('Error fetching AI response:', err);
       setError('Error fetching AI response. Please try again.');
     } finally {
       setLoading(false);
-      setInput('');
     }
   };
 
   return (
-    <div className={`chat-container ${isOpen ? 'open' : ''}`}>
+    <div className="chat-container">
       <button className="chat-toggle" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? 'Close Chat' : 'Open Chat'}
+        {isOpen ? 'Close Chat' : <i className="fas fa-robot"></i>}
       </button>
       {isOpen && (
         <div className="chat-box">
@@ -59,13 +64,23 @@ const Chat = () => {
             <h2>AI Assistant</h2>
           </div>
           <div className="chat-body">
-            {messages.map((msg, index) => (
-              <div key={index} className={`chat-message ${msg.role}`}>
-                {msg.content}
-              </div>
-            ))}
-            {loading && <p>Loading...</p>}
-            {error && <p className="chat-error">{error}</p>}
+            <div className="chat-messages">
+              {messages.map((msg, index) => (
+                <div key={index} className={`chat-message ${msg.role}`}>
+                  <p>{msg.content}</p>
+                </div>
+              ))}
+              {loading && (
+                <div className="chat-message assistant">
+                  <p>Loading...</p>
+                </div>
+              )}
+              {error && (
+                <div className="chat-message error">
+                  <p>{error}</p>
+                </div>
+              )}
+            </div>
           </div>
           <div className="chat-footer">
             <form onSubmit={handleSubmit}>
