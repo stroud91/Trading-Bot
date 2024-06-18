@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session'
-import marketDataReducer from './marketData';
+import marketDataReducer from './marketdata';
 import accountReducer from './account';
 import transactionReducer from './transaction'
 import orderReducer from './order';
@@ -9,7 +9,12 @@ import newsReducer from './news';
 
 
 const rootReducer = combineReducers({
-  session, marketDataReducer, accountReducer, transactionReducer, orderReducer, newsReducer
+  session,
+  marketData: marketDataReducer,
+  account: accountReducer,
+  transaction: transactionReducer,
+  order: orderReducer,
+  news: newsReducer,
 });
 
 

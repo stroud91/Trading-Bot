@@ -5,7 +5,7 @@ import {
 } from "recharts";
 import { fetchTransactions, createTransaction } from '../../store/transaction';
 import { createOrder, fetchOrders} from '../../store/order';
-import { fetchHistoricalData} from '../../store/marketData';
+import { fetchHistoricalData } from '../../store/marketdata';
 import { fetchNews } from '../../store/news';
 import './MarketGraph.css';
 
@@ -18,6 +18,8 @@ const MarketGraph = ({ symbol }) => {
     const user = useSelector((state) => state.session.user);
     const transactions = useSelector((state) => state.transactions.transactions);
     const orders = useSelector((state) => state.orders.orders);
+    const loadingHistoricalData = useSelector((state) => state.marketData.loadingHistoricalData);
+    const loadingNews = useSelector((state) => state.news.loadingNews);
 
     useEffect(() => {
         dispatch(fetchHistoricalData(symbol, timeFrame));
@@ -76,7 +78,9 @@ const MarketGraph = ({ symbol }) => {
                     <button onClick={() => handleTimeFrameChange("1m")}>1M</button>
                     <button onClick={() => handleTimeFrameChange("1y")}>1Y</button>
                 </div>
-                {historicalData ? (
+                {loadingHistoricalData ? (
+                    <p>Loading...</p>
+                ) : (
                     <ResponsiveContainer width="100%" height={400}>
                         <LineChart data={historicalData}>
                             <CartesianGrid strokeDasharray="3 3" />
@@ -87,8 +91,6 @@ const MarketGraph = ({ symbol }) => {
                             <Line type="monotone" dataKey="Close Price" stroke="#8884d8" activeDot={{ r: 8 }} />
                         </LineChart>
                     </ResponsiveContainer>
-                ) : (
-                    <p>Loading...</p>
                 )}
                 {user && (
                     <div className="buy-sell-options">
@@ -99,7 +101,9 @@ const MarketGraph = ({ symbol }) => {
             </div>
             <div className="news-section">
                 <h2>{symbol} News</h2>
-                {newsData ? (
+                {loadingNews ? (
+                    <p>Loading news...</p>
+                ) : (
                     <ul className="news-list">
                         {newsData.map((newsItem, index) => (
                             <li key={index} className="news-item">
@@ -110,8 +114,6 @@ const MarketGraph = ({ symbol }) => {
                             </li>
                         ))}
                     </ul>
-                ) : (
-                    <p>Loading news...</p>
                 )}
             </div>
         </div>

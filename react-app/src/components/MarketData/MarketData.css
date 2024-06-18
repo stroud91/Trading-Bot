@@ -1,0 +1,63 @@
+.market-data-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.market-data-top-stocks, .market-data-user-stocks {
+    background-color: rgb(71, 71, 71);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.market-data-top-stocks h2, .market-data-user-stocks h2 {
+    margin-bottom: 20px;
+}
+
+.market-data-top-stocks ul, .market-data-user-stocks ul {
+    list-style-type: none;
+
+    padding: 0;
+    margin: 0;
+}
+
+.market-data-top-stocks li, .market-data-user-stocks li {
+    color: black;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.market-data-top-stocks li:last-child, .market-data-user-stocks li:last-child {
+    border-bottom: none;
+}
+
+.stock-info {
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.stock-symbol {
+    font-weight: bold;
+}
+
+.stock-prices {
+    display: flex;
+    gap: 10px;
+}
+
+.stock-change {
+    font-weight: bold;
+}
+
+.stock-change.positive {
+    color: green;
+}
+
+.stock-change.negative {
+    color: red;
+}
