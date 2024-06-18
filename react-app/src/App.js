@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
@@ -27,6 +26,7 @@ import Cases from './components/MainPage/Cases';
 import Services from './components/MainPage/Services';
 import Blog from './components/MainPage/Blog';
 import ContactUs from './components/MainPage/ContactUs';
+import Chat from "./components/Chat/Chat";
 
 function App() {
   const dispatch = useDispatch();
@@ -86,6 +86,7 @@ function App() {
           <Route path="/transaction/delete/:transactionId" component={TransactionFormDelete} />
         </Switch>
       )}
+      <Chat />
     </>
   );
 }

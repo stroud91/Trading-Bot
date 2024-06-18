@@ -6,6 +6,7 @@ class Config:
     NEWS_API_KEY = os.environ.get('NEWS_API_KEY')
     FINNHUB_API_KEY = os.environ.get('FINNHUB_API_KEY')
     FINNHUB_SECRET = os.environ.get('FINNHUB_SECRET')
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     database_url = os.environ.get('DATABASE_URL')
 

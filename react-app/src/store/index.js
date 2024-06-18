@@ -7,6 +7,7 @@ import transactionReducer from './transaction'
 import orderReducer from './order';
 import newsReducer from './news';
 
+
 const rootReducer = combineReducers({
   session, marketDataReducer, accountReducer, transactionReducer, orderReducer, newsReducer
 });
