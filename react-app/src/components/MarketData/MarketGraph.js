@@ -14,10 +14,10 @@ const MarketGraph = ({ symbol }) => {
     const [timeFrame, setTimeFrame] = useState("1m");
     const historicalData = useSelector((state) => state.marketData.historicalData);
     const newsData = useSelector((state) => state.news.news);
-    const accountData = useSelector((state) => state.accounts.accountDetail);
+    const accountData = useSelector((state) => state.account.accountDetail);
     const user = useSelector((state) => state.session.user);
-    const transactions = useSelector((state) => state.transactions.transactions);
-    const orders = useSelector((state) => state.orders.orders);
+    const transactions = useSelector((state) => state.transaction.transactions);
+    const orders = useSelector((state) => state.order.orders);
     const loadingHistoricalData = useSelector((state) => state.marketData.loadingHistoricalData);
     const loadingNews = useSelector((state) => state.news.loadingNews);
 
