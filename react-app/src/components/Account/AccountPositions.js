@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactions } from '../../store/transaction';
 import './AccountPositions.css';
 
-const AccountPositions = ({ accountId }) => {
+const AccountPositions = () => {
     const dispatch = useDispatch();
-    const positions = useSelector(state => state.transaction.positions);
+    const transactions = useSelector((state) => state.transaction.transactions);
 
     useEffect(() => {
-        dispatch(fetchTransactions(accountId));
-    }, [dispatch, accountId]);
+        dispatch(fetchTransactions());
+    }, [dispatch]);
 
     return (
         <div className="account-positions">
@@ -28,17 +28,17 @@ const AccountPositions = ({ accountId }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {positions.length > 0 ? (
-                        positions.map(position => (
-                            <tr key={position.id}>
-                                <td>{position.market}</td>
-                                <td>{position.side}</td>
-                                <td>{position.size}</td>
-                                <td>{position.leverage}</td>
-                                <td>{position.liquidationPrice}</td>
-                                <td>{position.unrealizedPnL}</td>
-                                <td>{position.realizedPnL}</td>
-                                <td>{position.avgOpenClose}</td>
+                    {transactions.length > 0 ? (
+                        transactions.map((transaction) => (
+                            <tr key={transaction.id}>
+                                <td>{transaction.market}</td>
+                                <td>{transaction.side}</td>
+                                <td>{transaction.size}</td>
+                                <td>{transaction.leverage}</td>
+                                <td>{transaction.liquidation_price}</td>
+                                <td>{transaction.unrealized_pnl}</td>
+                                <td>{transaction.realized_pnl}</td>
+                                <td>{transaction.avg_open_close}</td>
                             </tr>
                         ))
                     ) : (

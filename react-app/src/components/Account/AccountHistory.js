@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTransactions } from '../../store/transaction';
 import './AccountHistory.css';
 
-const AccountHistory = ({ accountId }) => {
+const AccountHistory = () => {
     const dispatch = useDispatch();
-    const history = useSelector(state => state.transaction.history);
+    const history = useSelector((state) => state.transaction.transactions);
 
     useEffect(() => {
-        dispatch(fetchTransactions(accountId));
-    }, [dispatch, accountId]);
+        dispatch(fetchTransactions());
+    }, [dispatch]);
 
     return (
         <div className="account-history">
@@ -24,10 +24,10 @@ const AccountHistory = ({ accountId }) => {
                 </thead>
                 <tbody>
                     {history.length > 0 ? (
-                        history.map(entry => (
+                        history.map((entry) => (
                             <tr key={entry.id}>
                                 <td>{entry.date}</td>
-                                <td>{entry.transaction_type}</td>
+                                <td>{entry.type}</td>
                                 <td>{entry.amount}</td>
                             </tr>
                         ))

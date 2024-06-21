@@ -4,7 +4,6 @@ const UPDATE_ORDER = "orders/UPDATE_ORDER";
 const REMOVE_ORDER = "orders/REMOVE_ORDER";
 const SET_ORDER_DETAIL = "orders/SET_ORDER_DETAIL";
 
-
 const setOrders = (orders) => ({
     type: SET_ORDERS,
     payload: orders,

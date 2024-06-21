@@ -1,23 +1,24 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAccounts } from '../../store/account';
+import { fetchAccountDetail } from '../../store/account';
 import { fetchOrders } from '../../store/order';
 import { fetchTransactions } from '../../store/transaction';
 import AccountOrders from './AccountOrders';
-import AccountPositions from './AccountPositions';
 import AccountHistory from './AccountHistory';
 import './AccountOverview.css';
 
 const AccountOverview = ({ accountId }) => {
     const dispatch = useDispatch();
-    const account = useSelector(state => state.account.account);
-    const orders = useSelector(state => state.order.orders);
-    const transactions = useSelector(state => state.transaction.transactions);
+    const account = useSelector((state) => state.account.accountDetail);
+    const orders = useSelector((state) => state.order.orders);
+    const transactions = useSelector((state) => state.transaction.transactions);
 
     useEffect(() => {
-        dispatch(fetchAccounts(accountId));
-        dispatch(fetchOrders(accountId));
-        dispatch(fetchTransactions(accountId));
+        if (accountId) {
+            dispatch(fetchAccountDetail(accountId));
+            dispatch(fetchOrders());
+            dispatch(fetchTransactions());
+        }
     }, [dispatch, accountId]);
 
     return (
@@ -34,10 +35,8 @@ const AccountOverview = ({ accountId }) => {
             ) : (
                 <p>Loading account details...</p>
             )}
-
             <AccountOrders orders={orders} />
-            <AccountPositions transactions={transactions} />
-            <AccountHistory accountId={accountId} />
+            <AccountHistory transactions={transactions} />
         </div>
     );
 };

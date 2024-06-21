@@ -1,12 +1,8 @@
-
-
 const SET_TRANSACTIONS = "transactions/SET_TRANSACTIONS";
 const SET_TRANSACTION_DETAIL = "transactions/SET_TRANSACTION_DETAIL";
 const ADD_TRANSACTION = "transactions/ADD_TRANSACTION";
 const UPDATE_TRANSACTION = "transactions/UPDATE_TRANSACTION";
 const REMOVE_TRANSACTION = "transactions/REMOVE_TRANSACTION";
-
-
 
 const setTransactions = (transactions) => ({
     type: SET_TRANSACTIONS,
@@ -33,12 +29,13 @@ const removeTransaction = (transactionId) => ({
     payload: transactionId,
 });
 
-
 export const fetchTransactions = () => async (dispatch) => {
     const response = await fetch(`/api/transactions`);
     if (response.ok) {
         const data = await response.json();
         dispatch(setTransactions(data));
+    } else {
+        console.error("Failed to fetch transactions:", response.statusText);
     }
 };
 
@@ -47,6 +44,8 @@ export const fetchTransactionDetail = (transactionId) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(setTransactionDetail(data));
+    } else {
+        console.error("Failed to fetch transaction detail:", response.statusText);
     }
 };
 
@@ -61,6 +60,8 @@ export const createTransaction = (transactionData) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(addTransaction(data));
+    } else {
+        console.error("Failed to create transaction:", response.statusText);
     }
 };
 
@@ -75,6 +76,8 @@ export const updateTransactionDetails = (transactionId, transactionData) => asyn
     if (response.ok) {
         const data = await response.json();
         dispatch(updateTransaction(data));
+    } else {
+        console.error("Failed to update transaction:", response.statusText);
     }
 };
 
@@ -84,6 +87,8 @@ export const deleteTransaction = (transactionId) => async (dispatch) => {
     });
     if (response.ok) {
         dispatch(removeTransaction(transactionId));
+    } else {
+        console.error("Failed to delete transaction:", response.statusText);
     }
 };
 

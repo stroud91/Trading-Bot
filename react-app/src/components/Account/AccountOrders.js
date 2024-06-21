@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrders } from '../../store/order';
 import './AccountOrders.css';
 
-const AccountOrders = ({ accountId }) => {
+const AccountOrders = () => {
     const dispatch = useDispatch();
-    const orders = useSelector(state => state.order.orders);
+    const orders = useSelector((state) => state.order.orders);
 
     useEffect(() => {
-        dispatch(fetchOrders(accountId));
-    }, [dispatch, accountId]);
+        dispatch(fetchOrders());
+    }, [dispatch]);
 
     return (
         <div className="account-orders">
@@ -28,15 +28,15 @@ const AccountOrders = ({ accountId }) => {
                 </thead>
                 <tbody>
                     {orders.length > 0 ? (
-                        orders.map(order => (
+                        orders.map((order) => (
                             <tr key={order.id}>
                                 <td>{order.market}</td>
                                 <td>{order.status}</td>
                                 <td>{order.side}</td>
-                                <td>{order.amountFilled}</td>
+                                <td>{order.amount_filled}</td>
                                 <td>{order.price}</td>
                                 <td>{order.trigger}</td>
-                                <td>{order.goodTil}</td>
+                                <td>{order.good_til}</td>
                             </tr>
                         ))
                     ) : (

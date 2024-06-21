@@ -4,7 +4,6 @@ const ADD_ACCOUNT = "accounts/ADD_ACCOUNT";
 const UPDATE_ACCOUNT = "accounts/UPDATE_ACCOUNT";
 const REMOVE_ACCOUNT = "accounts/REMOVE_ACCOUNT";
 
-
 const setAccounts = (accounts) => ({
     type: SET_ACCOUNTS,
     payload: accounts,
@@ -30,7 +29,6 @@ const removeAccount = (accountId) => ({
     payload: accountId,
 });
 
-
 export const fetchAccounts = () => async (dispatch) => {
     const response = await fetch(`/api/account/accounts`);
     if (response.ok) {
@@ -41,6 +39,7 @@ export const fetchAccounts = () => async (dispatch) => {
 
 export const fetchAccountDetail = (accountId) => async (dispatch) => {
     const response = await fetch(`/api/account/accounts/${accountId}`);
+    console.log(("response for account detail", response))
     if (response.ok) {
         const data = await response.json();
         dispatch(setAccountDetail(data));
