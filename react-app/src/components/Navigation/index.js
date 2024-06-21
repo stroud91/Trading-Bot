@@ -36,7 +36,7 @@ function Navigation({ isLoaded }) {
                                     <NavLink to="/history" activeClassName="active">History</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/market" activeClassName="active">Market</NavLink>
+                                    <NavLink to="/market-data" activeClassName="active">Market</NavLink>
                                 </li>
                             </>
                         )}
