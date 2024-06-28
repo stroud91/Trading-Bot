@@ -42,7 +42,7 @@ export const fetchMarketData = () => async (dispatch) => {
 export const fetchHistoricalData = (symbol) => async (dispatch) => {
     try {
         console.log(`Fetching historical data for ${symbol}...`);
-        const response = await fetch(`/api/main/market_data/historical/${symbol}`);
+        const response = await fetch(`/api/main/graph/historical/${symbol}`);
         if (response.ok) {
             const data = await response.json();
             console.log("Historical data:", data);

@@ -38,19 +38,19 @@ def get_real_time_data(symbol):
         return jsonify(data), 400
     return jsonify(data), 200
 
-@market_data_bp.route('/market_data/historical/<string:symbol>', methods=['GET'])
-def get_historical_data(symbol):
-    endpoint = "stock/candle"
-    params = {
-        "symbol": symbol,
-        "resolution": "D",
-        "from": int((datetime.now() - timedelta(days=365)).timestamp()),
-        "to": int(datetime.now().timestamp())
-    }
-    data = get_finnhub_data(endpoint, params)
-    if "error" in data:
-        return jsonify(data), 400
-    return jsonify(data), 200
+# @market_data_bp.route('/market_data/historical/<string:symbol>', methods=['GET'])
+# def get_historical_data(symbol):
+#     endpoint = "stock/candle"
+#     params = {
+#         "symbol": symbol,
+#         "resolution": "D",
+#         "from": int((datetime.now() - timedelta(days=365)).timestamp()),
+#         "to": int(datetime.now().timestamp())
+#     }
+#     data = get_finnhub_data(endpoint, params)
+#     if "error" in data:
+#         return jsonify(data), 400
+#     return jsonify(data), 200
 
 @market_data_bp.route('/market_data/overview/<string:symbol>', methods=['GET'])
 def get_stock_overview(symbol):
@@ -94,7 +94,7 @@ def get_historical_graph_data(symbol):
         elif time_frame == '1y':
             function = 'TIME_SERIES_MONTHLY'
 
-        url = f"https://www.alphavantage.co/query?function={function}&symbol={symbol}&apikey={api_key}"
+        url = f"https://www.alphavantage.co/query?function={function}&symbol={symbol}&apikey={alpha_vantage_api_key}"
 
         response = requests.get(url)
         data = response.json()
