@@ -8,31 +8,29 @@ news_bp = Blueprint('news_bp', __name__)
 api_key = os.getenv('NEWS_API_KEY')
 
 def fetch_news_from_api(symbol):
-    """Fetch news for a given symbol from an external news API."""
-    url = f"https://newsapi.org/v2/everything?q={symbol}&apiKey={api_key}"
+    url = f"https://newsapi.org/v2/everything?q={symbol}&language=en&apiKey={api_key}"
     response = requests.get(url)
     if response.status_code == 200:
-        return response.json()['articles']
-    else:
-        return []
+        return response.json().get('articles', [])
+    return []
 
-@news_bp.route('/news/<string:symbol>', methods=['GET', 'POST'])
-def fetch_news(symbol):
+@news_bp.route('/news/<string:symbol>', methods=['GET'])
+def get_news(symbol):
     news_items = fetch_news_from_api(symbol)
     if not news_items:
         return jsonify({'error': 'No news found for the given symbol'}), 404
 
-    for item in news_items:
-        news = News(
-            title=item['title'],
-            publication_date=datetime.strptime(item['publishedAt'], '%Y-%m-%dT%H:%M:%SZ'),
-            description=item['description'],
-            url=item['url']
-        )
-        db.session.add(news)
-    db.session.commit()
+    news_list = []
+    for item in news_items[:50]:
+        news = {
+            'title': item['title'],
+            'publication_date': datetime.strptime(item['publishedAt'], '%Y-%m-%dT%H:%M:%SZ'),
+            'description': item['description'],
+            'url': item['url']
+        }
+        news_list.append(news)
 
-    return jsonify({'message': 'News fetched and stored successfully'}), 200
+    return jsonify(news_list), 200
 
 @news_bp.route('/news/<string:symbol>/all', methods=['GET'])
 def get_all_news(symbol):
