@@ -4,7 +4,7 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from "recharts";
 import { fetchTransactions, createTransaction } from '../../store/transaction';
-import { createOrder, fetchOrders} from '../../store/order';
+import { createOrder, fetchOrders } from '../../store/order';
 import { fetchHistoricalData } from '../../store/marketdata';
 import { fetchNews } from '../../store/news';
 import './MarketGraph.css';
@@ -32,6 +32,7 @@ const MarketGraph = ({ symbol }) => {
 
     const handleTimeFrameChange = (frame) => {
         setTimeFrame(frame);
+        dispatch(fetchHistoricalData(symbol, frame));
     };
 
     const handleBuy = () => {
