@@ -7,7 +7,7 @@ const Chat = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-
+  console.log("this is api key in react", process.env.REACT_APP_OPENAI_API_KEY)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -23,7 +23,8 @@ const Chat = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`
+          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
@@ -35,7 +36,7 @@ const Chat = () => {
           max_tokens: 150
         })
       });
-
+      
       if (res.status === 429) {
         setError('Too many requests. Please try again later.');
         setLoading(false);
