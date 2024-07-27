@@ -104,6 +104,8 @@
 }
 
 .chat-footer button {
+  width: fit-content;
+  height: fit-content;
   background-color: #007bff;
   color: white;
   border: none;
