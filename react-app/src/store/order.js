@@ -30,7 +30,7 @@ const setOrderDetail = (order) => ({
 });
 
 export const fetchOrders = () => async (dispatch) => {
-    const response = await fetch(`/api/orders`);
+    const response = await fetch(`/api/orders/orders`);
     if (response.ok) {
         const data = await response.json();
         dispatch(setOrders(data));
@@ -38,7 +38,7 @@ export const fetchOrders = () => async (dispatch) => {
 };
 
 export const fetchOrderDetail = (orderId) => async (dispatch) => {
-    const response = await fetch(`/api/orders/${orderId}`);
+    const response = await fetch(`/api/orders/orders/${orderId}`);
     if (response.ok) {
         const data = await response.json();
         dispatch(setOrderDetail(data));
@@ -46,7 +46,7 @@ export const fetchOrderDetail = (orderId) => async (dispatch) => {
 };
 
 export const createOrder = (orderData) => async (dispatch) => {
-    const response = await fetch(`/api/orders`, {
+    const response = await fetch(`/api/orders/orders`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ export const createOrder = (orderData) => async (dispatch) => {
 };
 
 export const updateOrderDetails = (orderId, orderData) => async (dispatch) => {
-    const response = await fetch(`/api/orders/${orderId}`, {
+    const response = await fetch(`/api/orders/orders/${orderId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ export const updateOrderDetails = (orderId, orderData) => async (dispatch) => {
 };
 
 export const deleteOrder = (orderId) => async (dispatch) => {
-    const response = await fetch(`/api/orders/${orderId}`, {
+    const response = await fetch(`/api/orders/orders/${orderId}`, {
         method: 'DELETE'
     });
     if (response.ok) {
