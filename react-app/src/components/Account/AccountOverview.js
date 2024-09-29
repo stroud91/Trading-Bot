@@ -1,25 +1,50 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAccountDetail } from '../../store/account';
+import { fetchAccounts, fetchAccountDetail } from '../../store/account';
 import { fetchOrders } from '../../store/order';
 import { fetchTransactions } from '../../store/transaction';
 import AccountOrders from './AccountOrders';
-import AccountHistory from './AccountHistory';
+import AccountPositions from './AccountPositions';
 import './AccountOverview.css';
 
-const AccountOverview = ({ accountId }) => {
+const AccountOverview = () => {
     const dispatch = useDispatch();
+    const accounts = useSelector((state) => state.account.accounts);
     const account = useSelector((state) => state.account.accountDetail);
     const orders = useSelector((state) => state.order.orders);
     const transactions = useSelector((state) => state.transaction.transactions);
 
+    const [accountId, setAccountId] = useState(null);
+
     useEffect(() => {
-        if (accountId) {
-            dispatch(fetchAccountDetail(accountId));
-            dispatch(fetchOrders());
-            dispatch(fetchTransactions());
+        // Fetch accounts if they haven't been loaded yet
+        if (accounts.length === 0) {
+            dispatch(fetchAccounts());
         }
-    }, [dispatch, accountId]);
+    }, [dispatch, accounts.length]);
+
+    useEffect(() => {
+        // Set the accountId once accounts are loaded
+        if (accounts.length > 0 && !accountId) {
+            // You can modify this logic to select the appropriate account
+            setAccountId(accounts[0].id);
+        }
+    }, [accounts, accountId]);
+
+    useEffect(() => {
+        // Fetch account details when accountId is set
+        if (accountId && !account) {
+            dispatch(fetchAccountDetail(accountId));
+        }
+    }, [dispatch, accountId, account]);
+
+    useEffect(() => {
+        // Fetch orders and transactions when account details are available
+        if (account) {
+            dispatch(fetchOrders(account.id));
+            dispatch(fetchTransactions(account.id));
+        }
+    }, [dispatch, account]);
 
     return (
         <div className="account-overview">
@@ -36,7 +61,7 @@ const AccountOverview = ({ accountId }) => {
                 <p>Loading account details...</p>
             )}
             <AccountOrders orders={orders} />
-            <AccountHistory transactions={transactions} />
+            <AccountPositions transactions={transactions} />
         </div>
     );
 };
