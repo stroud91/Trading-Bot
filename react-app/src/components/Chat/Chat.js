@@ -7,7 +7,7 @@ const Chat = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  console.log("this is api key in react", process.env.REACT_APP_OPENAI_API_KEY)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;

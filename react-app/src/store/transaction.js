@@ -30,7 +30,7 @@ const removeTransaction = (transactionId) => ({
 });
 
 export const fetchTransactions = () => async (dispatch) => {
-    const response = await fetch(`/api/transactions`);
+    const response = await fetch(`/api/transactions/transactions`);
     if (response.ok) {
         const data = await response.json();
         dispatch(setTransactions(data));
@@ -40,7 +40,7 @@ export const fetchTransactions = () => async (dispatch) => {
 };
 
 export const fetchTransactionDetail = (transactionId) => async (dispatch) => {
-    const response = await fetch(`/api/transactions/${transactionId}`);
+    const response = await fetch(`/api/transactions/transactions/${transactionId}`);
     if (response.ok) {
         const data = await response.json();
         dispatch(setTransactionDetail(data));
@@ -50,7 +50,7 @@ export const fetchTransactionDetail = (transactionId) => async (dispatch) => {
 };
 
 export const createTransaction = (transactionData) => async (dispatch) => {
-    const response = await fetch(`/api/transactions`, {
+    const response = await fetch(`/api/transactions/transactions`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export const createTransaction = (transactionData) => async (dispatch) => {
 };
 
 export const updateTransactionDetails = (transactionId, transactionData) => async (dispatch) => {
-    const response = await fetch(`/api/transactions/${transactionId}`, {
+    const response = await fetch(`/api/transactions/transactions/${transactionId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ export const updateTransactionDetails = (transactionId, transactionData) => asyn
 };
 
 export const deleteTransaction = (transactionId) => async (dispatch) => {
-    const response = await fetch(`/api/transactions/${transactionId}`, {
+    const response = await fetch(`/api/transactions/transactions/${transactionId}`, {
         method: 'DELETE'
     });
     if (response.ok) {
