@@ -46,10 +46,17 @@ def upgrade():
     op.create_table('transactions',
                     sa.Column('id', sa.Integer(), nullable=False),
                     sa.Column('account_id', sa.Integer(), sa.ForeignKey('accounts.id'), nullable=False),
-                    sa.Column('type', sa.String(length=50), nullable=False),
-                    sa.Column('amount', sa.Float(), nullable=False),
-                    sa.Column('created_at', sa.DateTime(), nullable=True, default=sa.func.current_timestamp()),
-                    sa.Column('updated_at', sa.DateTime(), nullable=True, default=sa.func.current_timestamp()),
+                    sa.Column('market', sa.String(length=50), nullable=False),
+                    sa.Column('side', sa.String(length=10), nullable=False),
+                    sa.Column('size', sa.Float(), nullable=False),
+                    sa.Column('leverage', sa.Float(), nullable=False),
+                    sa.Column('liquidation_price', sa.Float(), nullable=False),
+                    sa.Column('unrealized_pnl', sa.Float(), nullable=False, server_default='0.0'),
+                    sa.Column('realized_pnl', sa.Float(), nullable=False, server_default='0.0'),
+                    sa.Column('avg_open_price', sa.Float(), nullable=False),
+                    sa.Column('avg_close_price', sa.Float(), nullable=True),
+                    sa.Column('created_at', sa.DateTime(), nullable=True, server_default=sa.func.current_timestamp()),
+                    sa.Column('updated_at', sa.DateTime(), nullable=True, server_default=sa.func.current_timestamp(), onupdate=sa.func.current_timestamp()),
                     sa.PrimaryKeyConstraint('id')
                     )
 
